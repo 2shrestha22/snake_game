@@ -1,0 +1,7 @@
+{
+    "dart.flutterSdkPath": "/home/sangam/.local/share/mise/installs/flutter/3.29.0-stable",
+    "debug.javascript.defaultRuntimeExecutable": {
+        "pwa-node": "/home/sangam/.local/share/mise/shims/node"
+    },
+    "python.defaultInterpreterPath": "/home/sangam/.local/share/mise/installs/python/3.11.11/bin/python"
+}

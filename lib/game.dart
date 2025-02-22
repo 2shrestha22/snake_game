@@ -37,6 +37,9 @@ class _GameState extends State<Game> {
           context: context,
           builder: (context) => AlertDialog(title: Text('Game Over!')),
         );
+        setState(() {
+          points = 0;
+        });
         snake.start();
       },
     )..start();

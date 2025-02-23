@@ -1,9 +1,9 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:snake_game/dpad.dart';
 import 'package:snake_game/game_audio.dart';
 
 class Game extends StatefulWidget {
@@ -55,65 +55,74 @@ class _GameState extends State<Game> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.black,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                'Score: $points',
-                style: Theme.of(
-                  context,
-                ).textTheme.headlineSmall?.copyWith(color: Colors.white),
+    return SafeArea(
+      child: Material(
+        color: Colors.black,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  'Score: $points',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.headlineSmall?.copyWith(color: Colors.white),
+                ),
               ),
-            ),
-            Expanded(
-              child: KeyboardListener(
-                focusNode: focusNode,
-                onKeyEvent: (event) {
-                  setState(() {
-                    if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
-                      snake.direction = Direction.up;
-                    } else if (event.logicalKey ==
-                        LogicalKeyboardKey.arrowDown) {
-                      snake.direction = Direction.down;
-                    } else if (event.logicalKey ==
-                        LogicalKeyboardKey.arrowLeft) {
-                      snake.direction = Direction.left;
-                    } else if (event.logicalKey ==
-                        LogicalKeyboardKey.arrowRight) {
-                      snake.direction = Direction.right;
-                    }
-                  });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ColoredBox(
-                    color: Colors.black,
-                    child: Center(
-                      child: AspectRatio(
-                        aspectRatio: board.width / board.height,
-                        child: LayoutBuilder(
-                          builder: (context, constraints) {
-                            return CustomPaint(
-                              size: Size(
-                                constraints.maxWidth,
-                                constraints.maxHeight,
-                              ),
-                              painter: GamePainter(board: board, snake: snake),
-                            );
-                          },
+              Expanded(
+                child: KeyboardListener(
+                  focusNode: focusNode,
+                  onKeyEvent: (event) {
+                    setState(() {
+                      if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
+                        snake.direction = Direction.up;
+                      } else if (event.logicalKey ==
+                          LogicalKeyboardKey.arrowDown) {
+                        snake.direction = Direction.down;
+                      } else if (event.logicalKey ==
+                          LogicalKeyboardKey.arrowLeft) {
+                        snake.direction = Direction.left;
+                      } else if (event.logicalKey ==
+                          LogicalKeyboardKey.arrowRight) {
+                        snake.direction = Direction.right;
+                      }
+                    });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ColoredBox(
+                      color: Colors.black,
+                      child: Center(
+                        child: AspectRatio(
+                          aspectRatio: board.width / board.height,
+                          child: LayoutBuilder(
+                            builder: (context, constraints) {
+                              return CustomPaint(
+                                size: Size(
+                                  constraints.maxWidth,
+                                  constraints.maxHeight,
+                                ),
+                                painter: GamePainter(
+                                  board: board,
+                                  snake: snake,
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+              Align(
+                alignment: Alignment.centerRight,
+                child: Dpad(onTap: (direction) => snake.direction = direction),
+              ),
+            ],
+          ),
         ),
       ),
     );
